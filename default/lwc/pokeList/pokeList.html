@@ -1,0 +1,47 @@
+<template>
+    <div class="slds-align_absolute-center slds-grid slds-wrap slds-grid_align-spread grid">
+        <lightning-input 
+        type="text"
+        placeholder="Nombre Pokemon"
+        onchange={handleInputChange}
+        ></lightning-input>
+        <lightning-combobox
+            name="Generación"
+            placeholder="Generación"
+            value={valueGeneracion}
+            options={optionsGeneracion}
+            onchange={handleGeneracionChange} 
+        ></lightning-combobox>
+        <lightning-combobox
+        name="Tipos1"
+        placeholder="Tipo 1"
+        value={valueTipo1}
+        options={optionsTipos}
+        onchange={handleTiposChange} 
+    ></lightning-combobox>
+    <lightning-combobox
+        name="Tipos2"
+        placeholder="Tipo 2"
+        value={valueTipo2}
+        options={optionsTipos2}
+        onchange={handleTiposChange2} 
+    ></lightning-combobox>
+    </div>
+    <div class="slds-align_absolute-center">
+    <div class="slds-grid slds-wrap slds-grid_align-spread grid">
+    <template if:true = {pokemon.data}>
+        <template for:each={pokemon.data} for:item="poke">
+            <div key={poke.Name}>
+                <c-poke-title 
+                name={poke.Name}
+                imagen={poke.Imagen__c}
+                extid={poke.ExtId__c}
+                generacion={poke.Generacion__c}
+                class="slds-col slds-var-m-around_small">
+                </c-poke-title>
+            </div>
+        </template>
+    </template>
+    </div>
+    </div>
+</template>
