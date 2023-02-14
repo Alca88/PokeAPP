@@ -18,12 +18,12 @@ global class GetAbilities implements Database.Batchable<Integer>, Database.Allow
             req.setMethod('GET');
             HTTPResponse res = new Http().send(req);
 
-            JSONAbility pokeapiab = JSONAbility.parse(res.getBody());
+            JSONAbility pokeApiAb = JSONAbility.parse(res.getBody());
             Habilidad__c ability = new Habilidad__c();
 
             // Name y ExtId__c
-            ability.Name = pokeapiab.name.Capitalize();
-            ability.ExtId__c = Integer.valueOf(pokeapiab.id);
+            ability.Name = pokeApiAb.name.Capitalize();
+            ability.ExtId__c = Integer.valueOf(pokeApiAb.id);
 
             // Efecto__c
             Map<String,Object> abil =(Map<String,Object>) JSON.deserializeUntyped(res.getBody());
