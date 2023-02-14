@@ -16,14 +16,14 @@ global class GetPokemons implements Database.Batchable<Integer>, Database.Allows
             req.setMethod('GET');
             HTTPResponse res = new Http().send(req);
    
-            JSONPoke pokeapi = JSONPoke.parse(res.getBody());
+            JSONPoke pokeApi = JSONPoke.parse(res.getBody());
             Pokemon__c pokemon = new Pokemon__c();
 
             // Name, Altura__c, ExtId__c, Numero_de_Pokemon__c y Peso__c
-            pokemon.Name = pokeapi.name.capitalize();
-            pokemon.Altura__c = Double.valueOf(pokeapi.height)/10;
-            pokemon.ExtId__c = Integer.valueOf(pokeapi.id);
-            pokemon.Peso__c = Double.valueOf(pokeapi.weight)/10;
+            pokemon.Name = pokeApi.name.capitalize();
+            pokemon.Altura__c = Double.valueOf(pokeApi.height)/10;
+            pokemon.ExtId__c = Integer.valueOf(pokeApi.id);
+            pokemon.Peso__c = Double.valueOf(pokeApi.weight)/10;
 
             // Mapa que contiene el JSON
             Map<String,Object> pok =(Map<String,Object>) JSON.deserializeUntyped(res.getBody());
@@ -63,16 +63,26 @@ global class GetPokemons implements Database.Batchable<Integer>, Database.Allows
             Integer speedvalue = (Integer) stat5.get('base_stat');
             pokemon.Velocidad__c = speedvalue;
 
-            // Imagen__c
+            // Imagen__c artwork
+            Map<String,Object> sprites = (Map<String,Object>) pok.get('sprites');
+            Map<String,Object> other = (Map<String,Object>) sprites.get('other');
+            Map<String,Object> official_artwork = (Map<String,Object>) other.get('official-artwork');
+            String front_default = (String) official_artwork.get('front_default');
+            pokemon.Imagen__c = front_default;
+
+            /* Imagen__c dreamworld
+            Map<String,Object> sprites = (Map<String,Object>) pok.get('sprites');
+            Map<String,Object> other = (Map<String,Object>) sprites.get('other');
+            Map<String,Object> official_artwork = (Map<String,Object>) other.get('dream_world');
+            String front_default = (String) dream_world.get('front_default');
+            pokemon.Imagen__c = front_default;*/
+
+            /* Imagen__c Home
             Map<String,Object> sprites = (Map<String,Object>) pok.get('sprites');
             Map<String,Object> other = (Map<String,Object>) sprites.get('other');
             //Map<String,Object> official_artwork = (Map<String,Object>) other.get('home');
             //String front_default = (String) home.get('front_default');
-            //Map<String,Object> official_artwork = (Map<String,Object>) other.get('dream_world');
-            //String front_default = (String) dream_world.get('front_default');
-            Map<String,Object> official_artwork = (Map<String,Object>) other.get('official-artwork');
-            String front_default = (String) official_artwork.get('front_default');
-            pokemon.Imagen__c = front_default;
+            pokemon.Imagen__c = front_default;*/
 
             // Campo tipo lookup al objeto Habilidad__c
             List<Object> abilities = (List<Object>) pok.get('abilities');
