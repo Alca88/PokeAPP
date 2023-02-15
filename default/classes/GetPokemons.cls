@@ -98,7 +98,7 @@ global class GetPokemons implements Database.Batchable<Integer>, Database.Allows
 
             // Campo Slot(n)__c de tipo lookup a Movimiento__c
             System.debug(pokemon.Name); //busco en que pokemon está fallando la carga
-            try {
+            
                 List<Object> moves = (List<Object>) pok.get('moves');
                 Integer count = 0;
                 List<Integer> numMovi = new List<Integer>();
@@ -184,9 +184,7 @@ global class GetPokemons implements Database.Batchable<Integer>, Database.Allows
                         	pokemon.Slot4__c = ' ';
                     	}  
                 }
-            } catch(DmlException e) {
-                System.debug('The following exception has occurred: ' + e.getMessage());
-            }
+            
 
             // Se inserta el objeto Pokemon__c
             insert pokemon;

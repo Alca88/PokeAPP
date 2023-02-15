@@ -23,12 +23,13 @@ private class GetAbilitiesTest {
         
         Test.stopTest();
 
-        Habilidad__c hab = [SELECT id, name
-                     FROM Habilidad__c];
+        Habilidad__c hab = [SELECT id
+                     		FROM Habilidad__c
+                           LIMIT 1];
 
         system.assertEquals(1, hab.ExtId__c);
         system.assertEquals('stench', hab.Name);
-        //system.assertEquals('"Has a 10% chance of making target Pokémon flinch with each hit."', hab.short_effect);
+        system.assertEquals('Has a 10% chance of making target Pokémon flinch with each hit.', hab.Efecto__c);
     }
     
     @isTest 

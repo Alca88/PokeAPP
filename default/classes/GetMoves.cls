@@ -16,28 +16,28 @@ global class GetMoves implements Database.Batchable<Integer>, Database.AllowsCal
             req.setMethod('GET');
             HTTPResponse res = new Http().send(req);
 
-            JSONMove pokeapim = JSONMove.parse(res.getBody());
+            JSONMove pokeApiM = JSONMove.parse(res.getBody());
             Movimiento__c move = new Movimiento__c();
 
             // Name, ExtId__c, pp__c, Punteria__c, Prioridad__c y Poder__c
-            move.Name = pokeapim.name.Capitalize();
-            move.ExtId__c = Integer.valueOf(pokeapim.id);
-            move.pp__c = Integer.valueOf(pokeapim.pp);
+            move.Name = pokeApiM.name.Capitalize();
+            move.ExtId__c = Integer.valueOf(pokeApiM.id);
+            move.pp__c = Integer.valueOf(pokeApiM.pp);
         
-        	if (pokeapim.accuracy == null){
+        	if (pokeApiM.accuracy == null){
             	move.Punteria__c = 0;
             }
-        	else {move.Punteria__c = Integer.valueOf(pokeapim.accuracy);}
+        	else {move.Punteria__c = Integer.valueOf(pokeApiM.accuracy);}
         
-        	if (pokeapim.priority == null){
+        	if (pokeApiM.priority == null){
             	move.Prioridad__c = 0;
             }
-            else {move.Prioridad__c = Integer.valueOf(pokeapim.priority);}
+            else {move.Prioridad__c = Integer.valueOf(pokeApiM.priority);}
        
-            if (pokeapim.power == null){
+            if (pokeApiM.power == null){
             	move.Poder__c = 0;
             }
-            else {move.Poder__c = Integer.valueOf(pokeapim.power);}
+            else {move.Poder__c = Integer.valueOf(pokeApiM.power);}
 
             // Mapa que contiene el JSON 
             Map<String,Object> mov =(Map<String,Object>) JSON.deserializeUntyped(res.getBody());
@@ -47,9 +47,9 @@ global class GetMoves implements Database.Batchable<Integer>, Database.AllowsCal
             if (effectentrieslist.size() > 0){
                 Map<String,Object> effectentries0 =(Map<String,Object>) effectentrieslist.get(0);
                 String short_effect = (String) effectentries0.get('short_effect');
-                if (pokeapim.effect_chance != null){
-                    move.Chance_de_Efecto__c = Integer.valueOf(pokeapim.effect_chance);
-                    move.Efecto__c = short_effect.replace('$effect_chance', pokeapim.effect_chance);
+                if (pokeApiM.effect_chance != null){
+                    move.Chance_de_Efecto__c = Integer.valueOf(pokeApiM.effect_chance);
+                    move.Efecto__c = short_effect.replace('$effect_chance', pokeApiM.effect_chance);
                 } else{
                     move.Efecto__c = short_effect;
                 }

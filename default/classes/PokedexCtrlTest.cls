@@ -3,17 +3,17 @@ public with sharing class PokedexCtrlTest {
     
     @testSetup 
     static void makeData(){
-        Pokemon__c Pikachu = new Pokemon__c(Name = 'Pikachu');
-        insert Pikachu;
-        Pokemon__c Charmander = new Pokemon__c(Name = 'Charmander');
-        insert Charmander;
+        Pokemon__c Bulbasaur = new Pokemon__c (Name = 'Bulbasaur', /*Generacion__c = 1,*/ Tipos__c = 'Poison;Grass', ExtId__c = 1);
+        insert Bulbasaur;
+        Pokemon__c Charizard = new Pokemon__c (Name = 'Charizard', /*Generacion__c = 1,*/ Tipos__c = 'Flying;Fire', ExtId__c = 1);
+        insert Charizard;
     }
       
     @isTest
     static void shouldRetriveAmountOfPokemonInserted(){
 
         Test.startTest();
-            List<Pokemon__c> cuentalst = PokedexCtrl.getFilteredPokemons('');
+            List<Pokemon__c> cuentalst = PokedexCtrl.getFilteredPokemons('','','','');
         Test.stopTest();
         System.assertEquals(2, cuentalst.size());
     }
@@ -22,14 +22,15 @@ public with sharing class PokedexCtrlTest {
     static void shouldNoRetriveAmountOfPokemon(){
         
     delete [SELECT Id FROM Pokemon__c];
-    String error = '';
+    String error = null;
+        
     Test.startTest();
         try{
-            List<Pokemon__c> cuentalst = PokedexCtrl.getFilteredPokemons('');
+            List<Pokemon__c> cuentalst = PokedexCtrl.getFilteredPokemons('','','','');
         }Catch(Exception e){
             error = e.getMessage();
         }
     Test.stopTest();
-    System.assertEquals('Ups! no se enocontraron pokemons', error);
-}
+     system.assertEquals('Ups! no se enocontraron pokemons', error);
+	}
 }

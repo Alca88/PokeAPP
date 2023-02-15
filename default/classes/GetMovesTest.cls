@@ -8,9 +8,9 @@ private class GetMovesTest {//@testSetup
     static void movesGet() {
          // Set mock callout class 
         SingleRequestMock fakeResponse = new SingleRequestMock(200,
-                                                             'Complete',
-                                                              '{"name": "pound","effect_entries": ["short_effect": "Inflicts regular damage with no additional effect.","accuracy": 100}],"id":"1","power": "40","pp": "35","prioriy": "0"}',
-                                                               null); //code , status , json, null (from singlemuck)
+                                                               'Complete',
+                                                               '{"accuracy":100,"effect_chance":null,"effect_entries":[{"effect":"Inflicts regular damage.","language":{"name":"en","url":"https://pokeapi.co/api/v2/language/9/"},"short_effect":"Inflicts regular damage with no additional effect."}],"id":1,"name":"pound","power":40,"pp":35,"priority":0,"target":{"name":"selected-pokemon","url":"https://pokeapi.co/api/v2/move-target/10/"},"type":{"name":"normal","url":"https://pokeapi.co/api/v2/type/1/"}}',
+                                                                null); //code , status , json, null (from singlemuck)
         Test.setMock(HttpCalloutMock.class, fakeResponse); 
         
         Test.startTest();
@@ -24,12 +24,18 @@ private class GetMovesTest {//@testSetup
         
         Test.stopTest();
 
-        Movimiento__c mov = [SELECT id, name
-                     FROM Movimiento__c];
+         Movimiento__c mov = [SELECT Id
+                             FROM Movimiento__c
+                             LIMIT 1];
 
-        system.assertEquals(1, mov.ExtId__c);
-        system.assertEquals('pound', mov.Name);
-        //system.assertEquals(100, mov.accuracy);
+        System.assertEquals('Pound', mov.Name );
+        System.assertEquals(1, mov.ExtId__c);
+        System.assertEquals(35, mov.pp__c);
+        System.assertEquals(100, mov.Punteria__c);
+        System.assertEquals(0, mov.Prioridad__c);
+        System.assertEquals(40, mov.Poder__c);
+        System.assertEquals(null, mov.Chance_de_Efecto__c);
+        System.assertEquals('Inflicts regular damage with no additional effect.', mov.Efecto__c);
     }
     
     @isTest 
