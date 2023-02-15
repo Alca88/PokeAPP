@@ -3,7 +3,8 @@ import { NavigationMixin } from 'lightning/navigation';
 
 export default class pokeTitle extends NavigationMixin(LightningElement) {
 
-   @api pokemon;
+   @api pokemon; //revisar si estoy usando *
+   @api pokemonid;
    @api name;
    @api imagen;
    @api extid;
@@ -21,7 +22,7 @@ export default class pokeTitle extends NavigationMixin(LightningElement) {
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: this.pokemon.Id,
+                recordId: this.pokemonid,
                 objectApiName: 'Pokemon__c', 
                 actionName: 'view'
             }

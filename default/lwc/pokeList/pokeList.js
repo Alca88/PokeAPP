@@ -2,14 +2,49 @@ import { LightningElement, wire } from 'lwc';
 import getFilteredPokemons from '@salesforce/apex/PokedexCtrl.getFilteredPokemons';
 
 export default class PokeList extends LightningElement {
-    //properties
+    //properties, gets
     searchText = '';
     valueGeneracion = '';
     valueTipo1 = '';
     valueTipo2 = '';
+    contador = null;
+
+    optionsGeneracion = [
+        { label: 'Todas', value: ''},
+        { label: 'Generación 1', value: '1' },
+        { label: 'Generación 2', value: '2' },
+        { label: 'Generación 3', value: '3' },
+        { label: 'Generación 4', value: '4' },
+        { label: 'Generación 5', value: '5' },
+        { label: 'Generación 6', value: '6' },
+        { label: 'Generación 7', value: '7' },
+        { label: 'Generación 8', value: '8' }
+    ]
+
+    optionsTipos = [
+		{ label : 'Todos', value: ''},
+        { label : 'Acero', value: 'Steel'},
+        { label : 'Agua', value: 'Water'},
+		{ label : 'Bicho', value: 'Bug'},
+        { label : 'Dragón', value: 'Dragon'},
+		{ label : 'Eléctrico', value: 'Electric'},
+        { label : 'Fantasma', value: 'Ghost'},
+        { label : 'Fuego', value: 'Fire'},
+		{ label : 'Hada', value: 'Fairy'},
+        { label : 'Hielo', value: 'Ice'},
+        { label : 'Normal', value: 'Normal'},
+        { label : 'Oscuro', value: 'Dark'},
+		{ label : 'Pelea', value: 'Fighting'},
+		{ label : 'Planta', value: 'Grass'},
+        { label : 'Psíquico', value: 'Psychic'},
+        { label : 'Roca', value: 'Rock'},
+        { label : 'Tierra', value: 'Ground'},
+        { label : 'Veneno', value: 'Poison'},
+		{ label : 'Volador', value: 'Flying'}
+	]
 
     //wire
-    @wire(getFilteredPokemons, { searchText : '$searchText'})
+    @wire(getFilteredPokemons, { searchText : '$searchText', valueGeneracion : '$valueGeneracion', valueTipo1 : '$valueTipo1', valueTipo2 : '$valueTipo2'})
     pokemon;
 
     //connectedCallback(){console.log("CONSOLELOG"+pokemon)}
@@ -23,85 +58,27 @@ export default class PokeList extends LightningElement {
         }
         console.log(this.pokemon)
     }
-
+    
     handleGeneracionChange(event) {
-        this.valueGeneracion = event.target.valueGeneracion;
-
-         //code get optionsGeneracion
-    }
-
-    get optionsGeneracion() {
-        return [
-            { label: 'Todos', valueGeneracion: '' }, //esto va con un if 
-            { label: 'Generación 1', valueGeneracion: '' },
-            { label: 'Generación 2', valueGeneracion: '' },
-            { label: 'Generación 3', valueGeneracion: '' },
-            { label: 'Generación 4', valueGeneracion: '' },
-            { label: 'Generación 5', valueGeneracion: '' },
-            { label: 'Generación 6', valueGeneracion: '' },
-            { label: 'Generación 7', valueGeneracion: '' },
-            { label: 'Generación 8', valueGeneracion: '' },
-        ];
+        this.valueGeneracion = event.target.value;
+       
     }
 
     handleTiposChange(event) {
-        this.valueTipo1 = event.target.valueTipo1;
+        this.valueTipo1 = event.target.value;
 
-        //code get optionstipos
-    }
-
-    get optionsTipos() {
-        return [
-            { label: 'Todos', valueTipo1: '' }, //esto va con un if 
-            { label: 'Normal', valueTipo1: '' },
-            { label: 'Fighting', valueTipo1: '' },
-            { label: 'Flying', valueTipo1: '' },
-            { label: 'Poison', valueTipo1: '' },
-            { label: 'Ground', valueTipo1: '' },
-            { label: 'Rock', valueTipo1: '' },
-            { label: 'Bug', valueTipo1: '' },
-            { label: 'Ghost', valueTipo1: '' },
-            { label: 'Steel', valueTipo1: '' },
-            { label: 'Fire', valueTipo1: '' },
-            { label: 'Water', valueTipo1: '' },
-            { label: 'Grass', valueTipo1: '' },
-            { label: 'Electric', valueTipo1: '' },
-            { label: 'Psychic', valueTipo1: '' },
-            { label: 'Ice', valueTipo1: '' },
-            { label: 'Dragon', valueTipo1: '' },
-            { label: 'Dark', valueTipo1: '' },
-            { label: 'Fairy', valueTipo1: '' },
-        ];
     }
 
     handleTiposChange2(event) {
-        this.valueTipo2 = event.target.valueTipo2;
+        this.valueTipo2 = event.target.value;
 
-         //code get optionstipos2
     }
 
-    get optionsTipos2() {
-        return [
-            { label: 'Todos', valueTipo2: '' }, //esto va con un if 
-            { label: 'Normal', valueTipo2: '' },
-            { label: 'Fighting', valueTipo2: '' },
-            { label: 'Flying', valueTipo2: '' },
-            { label: 'Poison', valueTipo2: '' },
-            { label: 'Ground', valueTipo2: '' },
-            { label: 'Rock', valueTipo2: '' },
-            { label: 'Bug', valueTipo2: '' },
-            { label: 'Ghost', valueTipo2: '' },
-            { label: 'Steel', valueTipo2: '' },
-            { label: 'Fire', valueTipo2: '' },
-            { label: 'Water', valueTipo2: '' },
-            { label: 'Grass', valueTipo2: '' },
-            { label: 'Electric', valueTipo2: '' },
-            { label: 'Psychic', valueTipo2: '' },
-            { label: 'Ice', valueTipo2: '' },
-            { label: 'Dragon', valueTipo2: '' },
-            { label: 'Dark', valueTipo2: '' },
-            { label: 'Fairy', valueTipo2: '' },
-        ];
+    contadorRegistros(event) {
+        const contadorAux = event.target.value;
+        contadorAux = Object.keys(pokemon).length;
+        this.contador = contadorAux;
     }
+
+    
 }
-

@@ -1,5 +1,6 @@
 <template>
-    <div class="slds-align_absolute-center slds-grid slds-wrap slds-grid_align-spread grid">
+    <!--Barra de búsqueda y filtros-->
+    <div class="slds-align_absolute-center slds-grid slds-wrap slds-grid_align-spread grid slds-text-color_inverse">
         <lightning-input 
         type="text"
         placeholder="Nombre Pokemon"
@@ -7,41 +8,43 @@
         ></lightning-input>
         <lightning-combobox
             name="Generación"
-            placeholder="Generación"
+            label="Generación"
             value={valueGeneracion}
             options={optionsGeneracion}
             onchange={handleGeneracionChange} 
         ></lightning-combobox>
         <lightning-combobox
-        name="Tipos1"
-        placeholder="Tipo 1"
-        value={valueTipo1}
-        options={optionsTipos}
-        onchange={handleTiposChange} 
-    ></lightning-combobox>
-    <lightning-combobox
-        name="Tipos2"
-        placeholder="Tipo 2"
-        value={valueTipo2}
-        options={optionsTipos2}
-        onchange={handleTiposChange2} 
-    ></lightning-combobox>
+            name="Tipos1"
+            label="Tipo 1"
+            value={valueTipo1}
+            options={optionsTipos}
+            onchange={handleTiposChange} 
+        ></lightning-combobox>
+        <lightning-combobox
+            name="Tipos2"
+            label="Tipo 2"
+            value={valueTipo2}
+            options={optionsTipos}
+            onchange={handleTiposChange2} 
+        ></lightning-combobox>
+        <!--AQUÍ VA EL CUADRO CON EL CONTADOR DE REGISTRO Obecjt.key-->
+        <div class="slds-box">
+            <p onchange={contadorRegistros}>POKEMONS ATRAPADOS: {contador}</p>
+        </div>
     </div>
-    <div class="slds-align_absolute-center">
-    <div class="slds-grid slds-wrap slds-grid_align-spread grid">
-    <template if:true = {pokemon.data}>
-        <template for:each={pokemon.data} for:item="poke">
+    <!--Invocación pokeTitle-->
+    <div class="slds-align_absolute-center slds-grid slds-wrap slds-grid_align-spread grid">
+    <template if:true = {pokemon.data} for:each={pokemon.data} for:item="poke">
             <div key={poke.Name}>
                 <c-poke-title 
+                class="slds-col slds-var-m-around_small"
                 name={poke.Name}
                 imagen={poke.Imagen__c}
                 extid={poke.ExtId__c}
                 generacion={poke.Generacion__c}
-                class="slds-col slds-var-m-around_small">
+                pokemonid={poke.Id}>
                 </c-poke-title>
-            </div>
-        </template>
+            </div>    
     </template>
-    </div>
     </div>
 </template>

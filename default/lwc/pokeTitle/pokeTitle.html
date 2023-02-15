@@ -1,10 +1,10 @@
 <template>
-    <lightning-card  title={name} icon-name="custom:custom49" class="center">
+    <lightning-card  title={name} icon-name="custom:custom49" class="center" onclick={navigateToRecordViewPage}>
         <!-- Body Start -->
         <img
             class="specie slds-align_absolute-center slds-var-m-around_medium center"
             src={imagen}
-            onclick={navigateToRecordViewPage}/>
+           />
         <!--alt por si la imagen no carga -->
         <p class="slds-var-p-horizontal_small">
             #: {extid}<br>
@@ -12,4 +12,4 @@
         </p>
         <!-- Boyd End -->
     </lightning-card>
-</template> 
+</template>
